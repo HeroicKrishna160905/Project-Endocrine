@@ -1,158 +1,276 @@
 # **Project-Endocrine**
 ### **A Complete Artificial Pancreas Simulator (APS) for Intelligent Glucose Regulation**
 
-Project-Endocrine is a fully functional **closed-loop Artificial Pancreas System (APS)** designed to simulate blood glucose dynamics and automated insulin delivery in people with Type-1 Diabetes (T1D).  
-It combines **physiological modeling**, **adaptive PID control**, **basal learning**, **safety constraints**, and **reinforcement learning compatibility** into a unified, research-grade environment.
+**Project-Endocrine** is a full-scale, research-grade **closed-loop Artificial Pancreas System (APS)** simulation framework built from first principles.  
+It models the physiology of Type-1 Diabetes (T1D), implements intelligent insulin control algorithms, and provides a modular platform for experimentation, visualisation, and reinforcement learning research.
 
-This simulator is built to be **transparent**, **modular**, and **easily extendable** — ideal for academic research, experimentation, and future integration with FDA-approved virtual patient models.
+This project sits at the intersection of:
+- **Biomedical engineering**
+- **Control theory**
+- **Computational physiology**
+- **Machine learning / RL**
+- **Safety-critical systems**
+
+The goal is to create a **transparent, modular, academically rigorous APS simulator** that helps researchers explore how insulin automation can be improved for people with diabetes.
 
 ---
 
-## ⭐ **Key Features**
+# 🔍 **1. Introduction & Project Motivation**
 
-### **1️⃣ Physiological Patient Model (PK/PD)**
-A realistic glucose–insulin model including:
+Diabetes management is fundamentally a **control problem under uncertainty**.  
+Glucose levels fluctuate due to:
+
+- meals  
+- digestion variability  
+- insulin absorption delays  
+- stress, exercise  
+- sensor noise  
+- patient-specific physiology  
+
+A true artificial pancreas must:
+1. **sense** glucose  
+2. **predict** physiology  
+3. **act** with safe insulin doses  
+4. **adapt** to changing conditions  
+
+Project-Endocrine simulates this entire loop by combining:
+- A realistic **pharmacokinetic/pharmacodynamic (PK/PD)** model  
+- A robust **adaptive PID controller**  
+- A multi-layer **safety system**  
+- Cohort simulations across **hundreds of randomized virtual patients**  
+- Optional integration with **Reinforcement Learning policies**
+
+The goal is not only to simulate glucose regulation —  
+but to **explain, teach, and enable experimentation**.
+
+---
+
+# 🧬 **2. Physiological Model (PK/PD) — A Hybrid Scientific Overview**
+
+Most APS research uses the UVA/Padova model (FDA-approved).  
+Project-Endocrine builds a similar conceptual core but written cleanly from scratch.
+
+Our patient model includes:
+
+### **Glucose dynamics**
 - Plasma glucose compartment  
-- Plasma insulin compartment  
-- Insulin action dynamics  
-- Gut absorption & digestion  
-- Sensor noise  
-- Endogenous glucose production  
-- Randomized inter-patient variability  
-- Meal absorption delays and nonlinearity  
+- Endogenous glucose production (EGP)  
+- Meal absorption via a gut “carb pool” model  
+- Nonlinear glucose clearance  
 
-This allows simulation of realistic T1D patient behavior across individuals.
+### **Insulin dynamics**
+- Plasma insulin  
+- Subcutaneous insulin absorption  
+- Delays in insulin action  
+- “Insulin effect” compartment (X)  
+
+### **Noise + variability**
+- CGM sensor noise  
+- Inter-patient parameter randomization  
+- Variability in:
+  - insulin sensitivity  
+  - gut absorption  
+  - insulin clearance  
+  - glucose clearance  
+
+This ensures **every patient behaves differently**, just like in real-life diabetes.
+
+A single run simulates one virtual diabetic patient.  
+A cohort run (50–500 patients) tests controller generalization.
 
 ---
 
-### **2️⃣ Adaptive PID-Based Control Algorithm**
-The APS controller integrates:
-- **Proportional–Integral–Derivative (PID)** regulation  
-- **Adaptive basal adjustment**  
-- **Derivative smoothing**  
-- **Active insulin (IOB) modeling**  
-- **Predictive safety constraints**  
-- **Insulin-on-board veto system**
+# 🎛️ **3. Controller Architecture — Interpretable, Adaptive, Safe**
 
-The controller is intentionally kept **interpretable** and **clinically aligned**, making it suitable for educational, research, and prototyping applications.
+Project-Endocrine prioritizes **interpretability** and **clinical realism**.
 
----
+It uses an **Adaptive PID Controller** with:
 
-### **3️⃣ Safety Layer**
-A multi-step safety module prevents dangerous insulin delivery:
+### **PID Regulation**
+- Proportional → responds to current glucose error  
+- Integral → corrects long-term drift  
+- Derivative → anticipates glucose trends  
+
+### **Adaptive Basal Tuning**
+Basal rate automatically adjusts based on historical glucose patterns —  
+mimicking clinical basal titration but done algorithmically.
+
+### **Safety Layers (crucial in APS research)**
 - Predictive low-glucose suspend  
-- Hypoglycemia veto logic  
-- Maximum insulin caps  
-- Insulin-on-board moderation  
-- Protection against rapid glucose drops  
+- Rapid-drop veto  
+- Insulin-on-board (IOB) moderation  
+- Hard caps on insulin delivery  
+- Fail-safe clamp  
 
-Safety is a critical element in any APS, and this implementation follows the principles seen in commercial closed-loop systems.
+These are inspired by commercial closed-loop algorithms (e.g., Control-IQ, MiniMed, DiAs).
+
+The controller has a clean API that also allows **RL controllers to replace or augment PID**.
 
 ---
 
-### **4️⃣ Reinforcement Learning Ready**
-The simulator is fully compatible with RL-based controllers.  
-The structure allows:
-- Observation/state extraction  
-- Reward design  
+# 🤖 **4. Reinforcement Learning Compatibility**
+
+The simulator is designed to be fully RL-friendly:
+
 - Step-by-step environment transitions  
-- Multi-patient evaluation  
-- Plug-and-play policy integration  
+- Observation vector extraction  
+- Reward functions (glucose stability, TIR, insulin efficiency)  
+- Plug-and-play controller interface  
+- Multi-episode capability  
+- Multi-patient evaluation for robustness  
 
-This makes Project-Endocrine suitable for future RL experiments such as PPO, SAC, or hybrid controllers.
+This prepares Project-Endocrine for algorithms such as:
+- PPO  
+- SAC  
+- TD3  
+- Hybrid model-based RL  
 
----
-
-### **5️⃣ Cohort Simulation Engine**
-Run large-scale simulations across **tens or hundreds of virtual patients**:
-
-- Random physiological parameters  
-- Random meal schedules  
-- Random noise seeds  
-- 24-hour or multi-day simulation  
-- Batch summary metrics (TIR, TAR, hypo %, mean glucose, CV, etc.)
-
-Example performance across 200 randomized subjects:
-- **Mean TIR ≈ 86%**  
-- **0% Time Below Range (TBR)**  
-- **Stable control across varied patients**
+The architecture mirrors research frameworks like **GluCoEnv** and **RL4T1D**, but remains more transparent and lightweight.
 
 ---
 
-### **6️⃣ Visualization Tools**
-- Single-patient glucose/insulin plots  
-- Multi-subject overlay plots  
+# 👥 **5. Cohort Simulation Engine (Population-Level Testing)**
+
+A key requirement for APS research is generalization across **many** patients.
+
+Project-Endocrine can simulate:
+- **10**,  
+- **50**,  
+- **100**,  
+- even **200+ virtual subjects** in a single batch.
+
+Each subject has:
+- unique glucose dynamics  
+- unique insulin sensitivity  
+- unique meal timings  
+- unique noise seed  
+
+This creates realistic stress-testing conditions.
+
+### Example (200-subject run):
+- **Mean Time-In-Range (TIR)** ≈ *86%*  
+- **0% TBR (hypoglycemia)**  
+- Strong robustness across random patients  
+
+These results are comparable to early-stage closed-loop academic APS algorithms.
+
+---
+
+# 📊 **6. Visualisation Suite**
+
+Project-Endocrine includes built-in visual tools:
+
+### **Single-subject**
+- Glucose vs time  
+- Insulin delivery  
+- Meal events  
+- Glucose prediction  
+
+### **Cohort**
+- Overlay plots of 50–200 subjects  
+- Heatmaps of control performance  
 - Animated glucose trajectories  
-- Cohort heatmaps & statistical summaries  
+- Outlier detection (worst-case dynamics)  
 
-Animations help inspect controller stability, meal disturbances, and patient variability.
-
----
-Inside, you can:
-- Simulate a single virtual patient  
-- Run a 200-subject cohort  
-- Visualize glucose/insulin trajectories  
-- Modify PID parameters  
-- Test RL-ready structure  
+These visualizations are critical for:
+- debugging  
+- teaching  
+- research presentations  
+- publications  
 
 ---
 
-## 📈 **Metrics & Evaluation**
-The simulator computes:
+# 🧪 **7. Metrics & Evaluation Framework**
+
+Every run computes:
+
 - **Time in Range (70–180 mg/dL)**  
+- **Time Below Range (hypoglycemia)**  
 - **Time Above Range**  
-- **Time Below Range**  
 - **Mean glucose**  
-- **Standard deviation (variability)**  
-- **Coefficient of variation (CV%)**  
+- **Glucose variability**  
+- **Coefficient of Variation (CV%)**  
 - **Total insulin delivered**  
+- **Peak glucose**  
+- **Minimum glucose**  
 
-These metrics are standard in T1D APS research.
-
----
-
-## 🔭 **Future Work**
-Project-Endocrine is actively evolving. Planned additions include:
-- Integration with **FDA-approved UVA/Padova simulator (simglucose)**
-- Full **Reinforcement Learning controller** (PPO / SAC)
-- Advanced CGM degradation & calibration error models  
-- Multi-day simulation loops  
-- Uploadable meal profiles  
-- Web-based interactive dashboard  
+These follow clinical standards used in APS trials.
 
 ---
 
-## 🧩 **Why This Project Matters**
-This simulator bridges:
-- Clinical insight  
-- Modern control theory  
-- Artificial intelligence  
-- Realistic glucose physiology  
-- Safety-critical design  
+# 🚀 **9. Getting Started**
 
-It provides a clean, open-source foundation for students, engineers, and researchers exploring **Artificial Pancreas Systems**, **digital twins**, **RL-based healthcare**, and **cyber-physical systems**.
+Open the main notebook:
 
----
 
-## 🤝 **Contributions**
-Contributions, issues, and pull requests are welcome.  
-Feel free to fork the repository and build upon it.
+Inside, you can:
+- simulate a patient  
+- run large cohorts  
+- visualize controller performance  
+- experiment with PID tuning  
+- try different meal conditions  
+- prepare for RL-based extensions  
 
 ---
 
-## 📝 **License**
-MIT License — Feel free to use and modify the project with proper attribution.
+# 🔭 **10. Future Work (Roadmap)**
+
+Project-Endocrine is actively evolving. Planned extensions include:
+
+- **Integration with FDA-approved UVA/Padova simulator (simglucose)**  
+- **RL-driven glucose control** (PPO, SAC, model-based RL)  
+- **Enhanced CGM degradation models**  
+- **Multi-day simulation engine**  
+- **Continuous subcutaneous insulin absorption variants**  
+- **Web-based Streamlit dashboard**  
+- **Documentation site with full API**  
 
 ---
 
-## ❤️ **Acknowledgments**
-This project is inspired by academic work in:
-- Artificial pancreas research  
-- Control theory  
-- Reinforcement learning for healthcare  
-- Physiological modeling  
+# 🎯 **11. Why This Project Matters**
 
-Special thanks to the diabetes research community for their foundational contributions.
+Diabetes automation requires deep synergy between:
+- physiology  
+- control  
+- safety  
+- machine learning  
+- human factors  
 
+This project creates a **research playground** that allows engineers and students to:
+
+- understand APS design  
+- test control strategies  
+- explore RL applications  
+- study patient variability  
+- visualize glucose dynamics  
+- contribute to next-generation diabetes technology  
+
+It is more than a simulator —  
+it is a **teaching tool**, a **research platform**, and a **prototype for future APS algorithms**.
+
+---
+
+# 🤝 **12. Contributions**
+Contributions, pull requests, and discussions are welcome!  
+Whether you're into physiology, ML, control theory, or visualization — there is space here for exploration.
+
+---
+
+# 📝 **13. License**
+MIT License — Permissive and open for academic and personal use.
+
+---
+
+# ❤️ **14. Acknowledgments**
+Inspired by foundational work in:
+- Artificial Pancreas Systems  
+- UVA/Padova T1D models  
+- simglucose  
+- RL4T1D  
+- Control theory & safety engineering  
+
+Special appreciation to the diabetes research community.
+
+---
 
 
