@@ -1,3 +1,29 @@
+<!-- PROJECT BANNER -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/HeroicKrishna160905/Project-Endocrine/main/1763680295928~2.jpg" 
+       alt="Project Endocrine Banner" width="100%">
+</p>
+
+<!-- BADGES -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Platform-Colab-orange?style=for-the-badge&logo=google-colab">
+  <img src="https://img.shields.io/badge/AI/RL-Ready-purple?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/HeroicKrishna160905/Project-Endocrine?style=for-the-badge">
+</p>
+
+<!-- OPTIONAL: OPEN IN COLAB BADGE -->
+<p align="center">
+  <a href="https://colab.research.google.com/github/HeroicKrishna160905/Project-Endocrine/blob/main/Project_Endocrine.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
+  </a>
+</p>
+
+<br>
+
+
 # **Project–Endocrine**
 ### *A Complete Artificial Pancreas Simulator (APS) for Intelligent Glucose Regulation*
 
