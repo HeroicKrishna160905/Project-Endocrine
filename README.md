@@ -1,4 +1,4 @@
-# **PROJECT–ENDOCRINE**
+# **Project–Endocrine**
 ### *A Complete Artificial Pancreas Simulator (APS) for Intelligent Glucose Regulation*
 
 **Project-Endocrine** is a research-grade, end-to-end **Artificial Pancreas System (APS)** simulator.  
@@ -19,36 +19,38 @@ The aim is to create a **transparent, interpretable, modular APS simulator** wit
 
 # ⚙️ **System Architecture Overview**
 
-──────────────────────────────┐
-           │         Meal Input             │
-           └──────────────┬─────────────────┘
-                          ↓
-               ┌────────────────────┐
-               │   Gut Absorption   │
-               └──────────┬─────────┘
-                          ↓
-              ┌──────────────────────┐
-              │  Glucose Dynamics    │───► CGM Sensor (Noise)
-              └──────────┬───────────┘
-                          ↑
-         ┌──────────────────────────────────────┐
-         │        Insulin Action (X)            │
-         │  PK/PD + Delays + Nonlinear Effects  │
-         └──────────────────┬───────────────────┘
-                            ↑
-                    ┌───────────────┐
-                    │  Controller    │
-                    │ PID / RL / APID│
-                    └──────┬────────┘
-                           ↑
-               ┌────────────────────────┐
-               │   Safety Layer (IOB,   │
-               │  Suspend, Rate Limits) │
-               └──────────┬────────────┘
-                          ↑
-                    Insulin Delivery
+```text
+               ┌───────────────────────────────┐
+               │         Meal Input             │
+               └──────────────┬─────────────────┘
+                              ↓
+                   ┌────────────────────┐
+                   │   Gut Absorption   │
+                   └──────────┬─────────┘
+                              ↓
+                  ┌──────────────────────┐
+                  │  Glucose Dynamics    │───► CGM Sensor (Noise)
+                  └──────────┬───────────┘
+                              ↑
+             ┌──────────────────────────────────────┐
+             │        Insulin Action (X)            │
+             │  PK/PD + Delays + Nonlinear Effects  │
+             └──────────────────┬───────────────────┘
+                                ↑
+                        ┌───────────────┐
+                        │  Controller    │
+                        │ PID / RL / APID│
+                        └──────┬────────┘
+                               ↑
+                   ┌────────────────────────┐
+                   │   Safety Layer (IOB,   │
+                   │  Suspend, Rate Limits) │
+                   └──────────┬────────────┘
+                              ↑
+                        Insulin Delivery
+```
 
-  This is the closed-loop APS cycle used in research systems such as UVA/Padova, Control-IQ, and DiAs.
+This is the closed-loop APS cycle used in research systems such as UVA/Padova, Control-IQ, and DiAs.
 
 ---
 
@@ -170,9 +172,92 @@ These visuals are ideal for research papers and demos.
 
 # 🔧 **6. Installation**
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/HeroicKrishna160905/Project-Endocrine.git
 cd Project-Endocrine
 pip install -r requirements.txt
+```
+
+Or use the included Colab notebook.
+
+---
+
+# 🚀 **7. Quickstart Examples**
+
+### 👉 **Simulate a Single Subject**
+
+```python
+from endocrine.simulator import APS_Simulator
+
+sim = APS_Simulator()
+results = sim.run()
+sim.plot()
+```
+
+### 👉 **Run a Multi-Subject Cohort**
+
+```python
+from endocrine.evaluation import run_cohort
+
+stats, df = run_cohort(n_subjects=50)
+print(stats)
+df.head()
+```
+
+---
+
+# 🔭 **8. Future Roadmap**
+
+- Integration with FDA-approved **UVA/Padova simulator** (simglucose)  
+- RL algorithms (PPO, SAC, MBRL)  
+- CGM drift + bias modeling  
+- Multi-day closed-loop simulation  
+- Streamlit-based interactive dashboard  
+- Documentation website  
+
+---
+
+# 🎯 **9. Why This Project Matters**
+
+Automated diabetes control requires synergy across:
+
+- physiology  
+- control theory  
+- reinforcement learning  
+- safety engineering  
+- human-centered design  
+
+Project-Endocrine offers a **transparent, modular, research-grade playground**  
+for understanding and advancing APS algorithms.
+
+It serves as a:
+
+- **teaching tool**  
+- **research platform**  
+- **prototype of next-generation closed-loop controllers**
+
+---
+
+# 🤝 **10. Contributions**
+
+Pull requests, enhancements, bug reports, and discussions are welcome!
+
+---
+
+# 📝 **11. License**
+
+**MIT License** — open for personal, academic, and research use.
+
+---
+
+# ❤️ **12. Acknowledgments**
+
+Inspired by foundational work in:
+
+- UVA/Padova T1D models  
+- simglucose  
+- Control-IQ & DiAs APS systems  
+- Reinforcement Learning for APS  
+- Biomedical control engineering  
+
+Special appreciation to the global diabetes research community.
