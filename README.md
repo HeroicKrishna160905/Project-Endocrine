@@ -47,8 +47,8 @@ The aim is to create a **transparent, interpretable, modular APS simulator** wit
 
 ```text
                ┌───────────────────────────────┐
-               │         Meal Input             │
-               └──────────────┬─────────────────┘
+               │         Meal Input            │
+               └──────────────┬────────────────┘
                               ↓
                    ┌────────────────────┐
                    │   Gut Absorption   │
@@ -57,20 +57,20 @@ The aim is to create a **transparent, interpretable, modular APS simulator** wit
                   ┌──────────────────────┐
                   │  Glucose Dynamics    │───► CGM Sensor (Noise)
                   └──────────┬───────────┘
-                              ↑
+                             ↑
              ┌──────────────────────────────────────┐
              │        Insulin Action (X)            │
              │  PK/PD + Delays + Nonlinear Effects  │
              └──────────────────┬───────────────────┘
                                 ↑
                         ┌───────────────┐
-                        │  Controller    │
-                        │ PID / RL / APID│
+                        │  Controller   │
+                        │PID / RL / APID│
                         └──────┬────────┘
                                ↑
-                   ┌────────────────────────┐
-                   │   Safety Layer (IOB,   │
-                   │  Suspend, Rate Limits) │
+                   ┌───────────────────────┐
+                   │  Safety Layer (IOB,   │
+                   │ Suspend, Rate Limits) │
                    └──────────┬────────────┘
                               ↑
                         Insulin Delivery
