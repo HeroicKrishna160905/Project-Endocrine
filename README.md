@@ -16,7 +16,7 @@
 
 <!-- OPTIONAL: OPEN IN COLAB BADGE -->
 <p align="center">
-  <a href="https://colab.research.google.com/github/HeroicKrishna160905/Project-Endocrine/blob/main/Project_Endocrine.ipynb">
+  <a href="https://colab.research.google.com/github/HeroicKrishna160905/Project-Endocrine/blob/main/v6_3_RL.ipynb">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
   </a>
 </p>
