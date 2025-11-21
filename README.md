@@ -1,6 +1,6 @@
 <!-- PROJECT BANNER -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/HeroicKrishna160905/Project-Endocrine/main/1763680295928~2.jpg" 
+  <img src="https://raw.githubusercontent.com/HeroicKrishna160905/Project-Endocrine/main/1763680655732~2.jpg" 
        alt="Project Endocrine Banner" width="100%">
 </p>
 
